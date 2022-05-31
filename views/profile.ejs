@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+    <title>And They Were Roommates</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+        <img src="img/happydog.jpeg" alt="logo">
+    </div>
+
+    <ul>
+        <li>Home</li>
+        <li>Your List</li>
+        <li>Things to Buy</li>
+        <li>Notifications</li>
+        <li>Me!</li>
+        <li><a href="/logout" class="btn btn-default btn-sm">Logout</a></li>
+    </ul>
+  </header>
+    <div class="row">
+      <div>
+        <h1>Add an apartment!</h1>
+
+        <form action="/apartments" method="POST">
+            <div>
+                <h3>Address: </h3>
+                <input type="text" placeholder="Street Address & Unit #" name="street">
+                <input type="text" placeholder="City" name="city">
+                <input type="text" placeholder="State" name="state">
+                <input type="text" placeholder="Zipcode" name="zipcode">
+
+                <h3>Point of Contact:</h3>
+                <input type="text" placeholder="Name" name="contactName">
+                <input type="text" placeholder="Number" name="contactNumber">
+                <input type="text" placeholder="E-mail" name="contactEmail">
+            </div>
+
+            <div>
+                <h3>Apartment Information:</h3>
+                <input type="text" placeholder="Enter Bedrooms" name="bed">
+                <input type="text" placeholder="Enter Bathrooms" name="bath">
+                <input type="text" placeholder="Enter Price per Month" name="price">
+
+                <h5>Utilites Included</h5>
+                <div class="utilites">
+                    <div>
+                        <input type="checkbox" value="Water & Sewer" name="utilites">
+                        <label for="waterSewer">Water & Sewer</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Trash & Recycling" name="utilites">
+                        <label for="waterSewer">Trash & Recycling</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Gas" name="utilites">
+                        <label for="gas">Gas</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Electricity" name="utilites">
+                        <label for="electricity">Electricity</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Heat" name="utilites">
+                        <label for="heat">Heat</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Internet" name="utilites">
+                        <label for="internet">Internet</label>
+                    </div>
+                </div>
+
+            <textarea name="amenities" placeholder="List all the Amenities!" id="" cols="30" rows="3"></textarea>
+            <textarea name="additionalInfo" placeholder="Additional Information (grocery stores, parks, links, etc.)" id="" cols="30" rows="3"></textarea>
+              
+          </form>
+          <button type="submit">Submit</button>
+      </div>        
+      
+      <main>
+        <% for(var i=0; i<apartments.length; i++) {%>
+            <section id="<%=apartments[i]._id%>">
+              <h3><%= apartments[i].street %></h3>
+              <h5><%= apartments[i].city %>, <%= apartments[i].state %> <%= apartments[i].zipcode %></h5>
+              <p><%= apartments[i].contactName %>: <%= apartments[i].contactEmail %> <%= apartments[i].contactNumber %></p>
+              <h4>Apartment Information</h4>
+              <span><%= apartments[i].price %>/month</span>
+              <span><%= apartments[i].bed %> Bedroom(s), <%= apartments[i].bath %> Bathroom(s)</span>
+              <p>Utilites Included: <%= apartments[i].utilites %></p>
+              <p>Amenities Included: <%= apartments[i].amenities %></p>
+              <p>Additional Information: <%= apartments[i].additionalInfo %></p>
+              <div>
+                <h3>Opinions?</h3>
+                <h4>Pros</h4>
+                <% for(var j=0; j<apartments[i].pros.length; j++) {%>
+                  <span><%=apartments[i].pros[j].name%></span>
+                  <p><%=apartments[i].pros[j].pro%></p>
+                  <% } %>
+                <form action="/pros" method="POST">
+                    <h6>Pros</h6>
+                    <input type="hidden" name="hiddenId" value="<%=apartments[i]._id%>">
+                    <input type="text" value="<%= user.local.email %>" name="name">
+                    <textarea name="pros" placeholder="Enter Pros" id="" cols="30" rows="3"></textarea>
+                    <button>Pros</button>
+                </form>
+
+                <h4>Cons</h4>
+                <% for(var j=0; j<apartments[i].cons.length; j++) {%>
+                  <p><%=apartments[i].cons[j].name%></p>
+                  <p><%=apartments[i].cons[j].con%></p>
+                  <% } %>
+                <form action="/cons" method="POST">
+                    <h6>Cons</h6>
+                    <input type="hidden" name="hiddenId" value="<%=apartments[i]._id%>">
+                    <input type="text" value="<%= user.local.email %>" name="name">
+                    <textarea name="cons" placeholder="Enter Cons" id="" cols="30" rows="3"></textarea>
+                    <button>Cons</button>
+                </form>
+              </div>
+              <button class="delete">Delete</button>
+            </section>
+        <% } %>
+        </main>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="main.js"></script>
+
+</body>
+
+</html>
