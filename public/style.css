@@ -1,9 +1,13 @@
+body::before{
+  display: block;
+  content: '';
+  height: 70px;
+}
 body{
-  /* padding-top:40px; */
   word-wrap:break-word;
 }
 img{
-  height: 200px;
+  height: 500px;
 }
 nav{
   background-color: #a3d4b0;

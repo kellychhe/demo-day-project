@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
       <a href="#" class="navbar-brand">And They Were Roommates</a>
 
@@ -107,7 +107,7 @@
   
   <main>
     <% for(var i=0; i<apartments.length; i++) {%>
-    <section class="card col-md-6" id="<%=apartments[i]._id%>">
+    <section class="card bg-light col-md-6" id="<%=apartments[i]._id%>">
       <h3><%= apartments[i].street %></h3>
       <h5><%= apartments[i].city %>, <%= apartments[i].state %> <%= apartments[i].zipcode %></h5>
       <p><%= apartments[i].contactName %>: <%= apartments[i].contactEmail %> <%= apartments[i].contactNumber %></p>
