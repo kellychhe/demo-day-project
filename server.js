@@ -9,6 +9,8 @@ const MongoClient = require('mongodb').MongoClient
 const mongoose = require('mongoose'); // different way of talking to databse
 const passport = require('passport');
 const flash    = require('connect-flash'); //error message
+const ObjectId = require('mongodb').ObjectId
+// const moment = require('moment')
 
 const morgan       = require('morgan'); //logs every request on app
 const cookieParser = require('cookie-parser'); //helps look at cookies
@@ -26,7 +28,7 @@ mongoose.set('useUnifiedTopology', true);
 mongoose.connect(configDB.url, (err, database) => { //connecting to database. pass in url from configdb
   if (err) return console.log(err)
   db = database //connection to database is stored in db
-  require('./app/routes.js')(app, passport, db); //run function from routes js
+  require('./app/routes.js')(app, passport, db, ObjectId); //run function from routes js
   //creates API for app
 }); // connect to our database
 require('./config/passport')(passport); // pass passport for configuration

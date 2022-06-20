@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Modern Business - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/styles.css" rel="stylesheet" />
+        <link href="/edits.css" rel="stylesheet" />
+    </head>
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-green">
+                <div class="container px-5">
+                    <a class="navbar-brand" href="/">And They Were Roommates</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
+                            <!-- <li class="nav-item"><a class="nav-link" href="#">Contact</a></li> -->
+                            <!-- <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li> -->
+                            
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Groups</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                    <% for(let i=0; i<groups.length; i++) {%>
+                                        <li><a class="dropdown-item" href="/groups/<%= groups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                        <%}%>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Add Apartment</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
+                                    <% for(let i=0; i<groups.length; i++) {%>
+                                        <li><a class="dropdown-item" href="/form/<%= groups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                        <%}%>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <section class="bg-light py-5">
+                <div class="container px-5 my-5">
+                    <div class="text-center mb-5">
+                        <h1 class="fw-bolder"><%=user.local.firstName%>'s Potential Apartments</h1>
+                        <!-- <p class="lead fw-normal text-muted mb-0">With our no hassle pricing plans</p> -->
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <!-- Pricing card free-->
+                        <!-- Pricing card pro-->
+                        <% for(let i=0; i<love.length; i++) {%>
+                        <div class="col-lg-6 col-xl-4 my-3" >
+                            <div class="card mb-5 mb-xl-0 bg-love-it">
+                                <div class="card-body p-5" id="<%= love[i]._id%>">
+                                    <!-- <div class="small text-uppercase fw-bold">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        Pro
+                                    </div> -->
+                                    <div class="mb-3">
+                                        <a href="/post/<%= love[i]._id%>" target="_blank"><h2><%= love[i].street %></h2></a>
+                                        <p class="text-muted"><%= love[i].city %>, <%= love[i].state %> <%= love[i].zipcode %></p>
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong><%= love[i].price %>/month</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <%= love[i].bed %> Bedroom(s), <%= love[i].bath %> Bathroom(s)
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Utilites Included: <%= love[i].utilites %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Amenities Included: <%= love[i].amenities %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Additional Information: <%= love[i].additionalInfo %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i> Contact
+                                            <%= love[i].contactName %>: <%= love[i].contactEmail %> | <%= love[i].contactNumber %>
+                                        </li>
+                                    </ul>
+                                    <div>
+                                        <button class="loveIt btn btn-success">Love it!</button>
+                                        <button class="likeIt mx-3 btn btn-warning">Like it</button>
+                                        <button class="hateIt btn btn-danger">Hate it</button>
+                                    </div>
+                                    <div class="d-grid mt-4"><button class="delete btn btn-secondary">Delete</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+
+                    <% for(let i=0; i<like.length; i++) {%>
+                        <div class="col-lg-6 col-xl-4 my-3" >
+                            <div class="card mb-5 mb-xl-0 bg-like-it">
+                                <div class="card-body p-5" id="<%= like[i]._id%>">
+                                    <!-- <div class="small text-uppercase fw-bold">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        Pro
+                                    </div> -->
+                                    <div class="mb-3">
+                                        <a href="/post/<%= like[i]._id%>" target="_blank"><h2><%= like[i].street %></h2></a>
+                                        <p class="text-muted"><%= like[i].city %>, <%= like[i].state %> <%= like[i].zipcode %></p>
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong><%= like[i].price %>/month</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <%= like[i].bed %> Bedroom(s), <%= like[i].bath %> Bathroom(s)
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Utilites Included: <%= like[i].utilites %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Amenities Included: <%= like[i].amenities %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Additional Information: <%= like[i].additionalInfo %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i> Contact
+                                            <%= like[i].contactName %>: <%= like[i].contactEmail %> | <%= like[i].contactNumber %>
+                                        </li>
+                                    </ul>
+                                    <div>
+                                        <button class="loveIt btn btn-success">Love it!</button>
+                                        <button class="likeIt mx-3 btn btn-warning">Like it</button>
+                                        <button class="hateIt btn btn-danger">Hate it</button>
+                                    </div>
+                                    <div class="d-grid mt-4"><button class="delete btn btn-secondary">Delete</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+
+                    <% for(let i=0; i<hate.length; i++) {%>
+                        <div class="col-lg-6 col-xl-4 my-3" >
+                            <div class="card mb-5 mb-xl-0 bg-hate-it">
+                                <div class="card-body p-5" id="<%= hate[i]._id%>">
+                                    <!-- <div class="small text-uppercase fw-bold">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        Pro
+                                    </div> -->
+                                    <div class="mb-3">
+                                        <a href="/post/<%= hate[i]._id%>" target="_blank"><h2><%= hate[i].street %></h2></a>
+                                        <p class="text-muted"><%= hate[i].city %>, <%= hate[i].state %> <%= hate[i].zipcode %></p>
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong><%= hate[i].price %>/month</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <%= hate[i].bed %> Bedroom(s), <%= hate[i].bath %> Bathroom(s)
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Utilites Included: <%= hate[i].utilites %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Amenities Included: <%= hate[i].amenities %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Additional Information: <%= hate[i].additionalInfo %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i> Contact
+                                            <%= hate[i].contactName %>: <%= hate[i].contactEmail %> | <%= hate[i].contactNumber %>
+                                        </li>
+                                    </ul>
+                                    <div>
+                                        <button class="loveIt btn btn-success">Love it!</button>
+                                        <button class="likeIt mx-3 btn btn-warning">Like it</button>
+                                        <button class="hateIt btn btn-danger">Hate it</button>
+                                    </div>
+                                    <div class="d-grid mt-4"><button class="delete btn btn-secondary">Delete</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+
+                    <% for(let i=0; i<notRated.length; i++) {%>
+                        <div class="col-lg-6 col-xl-4 my-3" >
+                            <div class="card mb-5 mb-xl-0">
+                                <div class="card-body p-5" id="<%= notRated[i]._id%>">
+                                    <div class="mb-3">
+                                        <a href="/post/<%= notRated[i]._id%>" target="_blank"><h2><%= notRated[i].street %></h2></a>
+                                        <p class="text-muted"><%= notRated[i].city %>, <%= notRated[i].state %> <%= notRated[i].zipcode %></p>
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <strong><%= notRated[i].price %>/month</strong>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            <%= notRated[i].bed %> Bedroom(s), <%= notRated[i].bath %> Bathroom(s)
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Utilites Included: <%= notRated[i].utilites %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Amenities Included: <%= notRated[i].amenities %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Additional Information: <%= notRated[i].additionalInfo %>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i> Contact
+                                            <%= notRated[i].contactName %>: <%= notRated[i].contactEmail %> | <%= notRated[i].contactNumber %>
+                                        </li>
+                                    </ul>
+                                    <div>
+                                        <button class="loveIt btn btn-success">Love it!</button>
+                                        <button class="likeIt mx-3 btn btn-warning">Like it</button>
+                                        <button class="hateIt btn btn-danger">Hate it</button>
+                                    </div>
+                                    <div class="d-grid mt-4"><button class="delete btn btn-secondary">Delete</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- Footer-->
+        <footer class="bg-green py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Kelly Chhe 2022</div></div>
+                    <div class="col-auto">
+                        <a class="link-light small" href="#!">Privacy</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Terms</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/main.js"></script>
+    </body>
+</html>

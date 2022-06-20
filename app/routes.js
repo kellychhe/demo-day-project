@@ -1,22 +1,110 @@
-module.exports = function(app, passport, db) { // sends function to server.js
-  const {ObjectId} = require('mongodb')
+module.exports = function(app, passport, db, ObjectId) { // sends function to server.js
 
-// normal routes ===============================================================
+// normal GET routes ===============================================================
 
-    // show the home page (will also have our login links)
+    // HOMEPAGE =====================
     app.get('/', function(req, res) {
         res.render('index.ejs');
     });
 
-    // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('apartments').find().toArray((err, result) => { // uses the db connection 
+      db.collection('groups').find().toArray((err,results) => {
+        const userGroups = results.filter(group => group.usersId.includes(req.user._id.toString()))
+        // console.log('filtered', userGroups)
+        // console.log('id', req.user._id)
+        const groupObj = {}
+        for (groups of userGroups){
+          groupObj[groups._id] = []
+        }
+        //groupObj ={
+          // group id: []
+        //}
+        // const groupMembers = results.filter().usersId
+        //.filter(members => members !== req.user_id.toString())
+        // console.log(userGroups)
+      db.collection('users').find().toArray((err, results) => {
+        for (let i = 0; i < userGroups; i++){
+          for (let j = 0; j < userGroups[i].usersId; j++){
+            if(true){
+
+              groupObj[userGroups[i]._id].push()
+            }
+          }
+        }
+        // const members = results.filter(member => groupMembers.includes(member._id.toString))
+        // console.log(members)
+        console.log(results)
+        if (err) return console.log(err)
+        res.render('profile.ejs', {
+          user: req.user,
+          groups: userGroups,
+          allUsers: results 
+          // groupMembers: members
+        })
+      })
+      })
+    })
+
+    app.get('/form/:id', isLoggedIn, function(req,res) {
+      db.collection('groups').find().toArray((err, results) => {
+        const oneGroup = results.filter(group => group.usersId.includes(req.user._id.toString()))
+        // console.log('filtered',oneGroup)
+        // console.log('result id',results[0].usersId)
+        // console.log('users id', req.user._id)
+        // console.log('group id', groupId)
+        if (err) return console.log(err)
+        // console.log('results:', results)
+        res.render('form.ejs', {
+          allGroups: results,
+          groups: oneGroup
+        })
+      })
+    })
+
+    // groups (apt lists) SECTION =========================
+    app.get('/groups/:id', isLoggedIn, function(req, res) {
+      const groupId = req.params.id.toString()
+      // console.log( 'this is the id', groupId)
+        db.collection('apartments').find( { groupId: groupId } ).toArray((err, results) => { 
+          // console.log('results',results)
+          const loveIt = results.filter(apt => apt.preference === 'love-it') 
+          const likeIt = results.filter(apt => apt.preference === 'like-it') 
+          const hateIt = results.filter(apt => apt.preference === 'hate-it') 
+          const notRated = results.filter(apt => apt.preference === '')
+        
+        db.collection('groups').find().toArray((err, results) => {
+          const userGroups = results.filter(group => group.usersId.includes(req.user._id.toString()))
+        
           if (err) return console.log(err)
-          res.render('profile.ejs', {
+          res.render('group.ejs', {
             user : req.user, //use to just show profile name
-            apartments: result
+            love: loveIt,
+            like: likeIt,
+            hate: hateIt,
+            notRated: notRated,
+            groups: userGroups
           })
         })
+      })
+    });
+
+    // INDIVUDUAL APT PAGES ===============================
+    app.get('/post/:id', isLoggedIn, function(req, res) {
+      const postId = req.params.id
+      db.collection('apartments').find({ _id: ObjectId(postId) }).toArray((err, result) => {
+
+      db.collection('groups').find().toArray((err, results) => {
+        const userGroups = results.filter(group => group.usersId.includes(req.user._id.toString()))
+      
+        if (err) return console.log(err)
+        console.log(result)
+        res.render('post.ejs', {
+          user : req.user,
+          posts: result,
+          groups: userGroups
+        })
+      })
+      })
     });
 
     // LOGOUT ==============================
@@ -25,10 +113,34 @@ module.exports = function(app, passport, db) { // sends function to server.js
         res.redirect('/');
     });
 
-// apt board routes ===============================================================
+// POST routes ===============================================================
+    
+    app.post('/createGroup', (req,res) => {
+      db.collection('groups').insertOne({
+        usersId: [req.body.currentUserId],
+        groupName: req.body.groupName
+      }, (err, result) => {
+        if (err) return console.log(err)
+        // console.log('group created in database')
+        res.redirect('/profile')
+      })
+    })
+
+    app.post('/addGroup', (req,res) => {
+      db.collection('groups').updateOne({groupName: req.body.groupName},{
+        $push: {
+          usersId: req.body.addedUserId
+        },
+      },(err, result) => {
+        if (err) return console.log(err)
+        // console.log('group added')
+        res.redirect('/profile')
+      })
+    })
 
     app.post('/apartments', (req, res) => {
       db.collection('apartments').insertOne({
+        groupId: req.body.groupId,
         street: req.body.street,
         city: req.body.city,
         state: req.body.state,
@@ -43,75 +155,157 @@ module.exports = function(app, passport, db) { // sends function to server.js
         amenities: req.body.amenities,
         additionalInfo: req.body.additionalInfo,
         pros: [],
-        cons: []
+        cons: [],
+        preference: '',
+        tour: {scheduledBy : 'N/A', date: 'N/A', time: 'N/A'},
+        questions: []
       }, (err, result) => {
         if (err) return console.log(err)
-        console.log('saved to database')
-        res.redirect('/profile')
+        // console.log('saved to database')
+        res.redirect(`/form/${req.body.groupId}`)
       })
     })
 
-    app.post('/pros', (req, res) => {
-      db.collection('apartments').updateOne({ _id: ObjectId(req.body.hiddenId) }, {
-        $push: {
-          pros: {name: req.body.name, pro: req.body.pros}
+    app.post('/comments', (req, res) => {
+      const postId = ObjectId(req.body.id)
+      if (req.body.commentType === 'pros'){
+        db.collection('apartments').updateOne({_id: postId}, {
+          $push: {
+            pros: {
+              name: req.body.name, 
+              comment: req.body.comment
+            }
+          }
+        },
+          (err, result) => {
+            if (err) return console.log(err)
+            // console.log('comment saved to database')
+            res.redirect(`/post/${postId}`)
+          })
+      } else{
+        db.collection('apartments').updateOne({_id: postId}, {
+          $push: {
+            cons: {
+              name: req.body.name, 
+              comment: req.body.comment
+            }
+          }
+        },
+          (err, result) => {
+            if (err) return console.log(err)
+            // console.log('comment saved to database')
+            res.redirect(`/post/${postId}`)
+          })
+      }
+    })
+
+    app.post('/scheduleTour', (req, res) => {
+      const postId = ObjectId(req.body.postId)
+      let date = new Date(req.body.date)
+      let time = new Date(`${req.body.date} ${req.body.time}`)
+      const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+      const optionsTime = { hour: 'numeric', minute: 'numeric', hour12: true }
+      date = date.toLocaleDateString('en-US', optionsDate)
+      time = time.toLocaleDateString('en-US', optionsTime).split(' ')
+      time = time.slice(1).join(' ')
+      // console.log('tour date', date)
+      // console.log('this is the id',postId)
+      db.collection('apartments').updateOne({_id: postId}, {
+        $set: {
+          tour: {
+            scheduledBy: req.body.name, 
+            date: date, 
+            time: time
+          }
         }
       },
-        (err, result) => {
+      (err, result) => {
+          // console.log('tour info',req.body.postId, req.body.name, req.body.date, req.body.time)
           if (err) return console.log(err)
-          console.log('comment saved to database')
-          res.redirect('/profile')
+          // console.log('comment saved to database')
+          console.log(postId)
+          res.redirect(`/post/${postId}`)
+
         })
     })
-    app.post('/cons', (req, res) => {
-      db.collection('apartments').updateOne({ _id: ObjectId(req.body.hiddenId) }, {
+
+    app.post('/questions', (req, res) => {
+      console.log('this is the id',req.body._id)
+      const postId = ObjectId(req.body._id)
+      db.collection('apartments').updateOne({_id: postId}, {
         $push: {
-          cons: {name: req.body.name, con: req.body.cons}
+          questions: {
+            name: req.body.name, 
+            question: req.body.question, 
+          }
         }
       },
-        (err, result) => {
+      (err, result) => {
+          console.log('tour info', postId, req.body.name, req.body.question)
           if (err) return console.log(err)
-          console.log('comment saved to database')
-          res.redirect('/profile')
+          // console.log('comment saved to database')
+          console.log(postId)
+          res.redirect(`/post/${postId}`)
+
         })
     })
+    // PUT routes ===============================================================
 
-    // app.put('/apartments', (req, res) => {
-    //   db.collection('apartments')
-    //   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    //     $set: {
-    //       thumbUp:req.body.thumbUp + 1
-    //     }
-    //   }, {
-    //     sort: {_id: -1},
-    //     upsert: true
-    //   }, (err, result) => {
-    //     if (err) return res.send(err)
-    //     res.send(result)
-    //   })
-    // })
+    app.put('/groups/loveIt', (req, res) => {
+      db.collection('apartments')
+      .findOneAndUpdate({_id: ObjectId(req.body._id)}, {
+        $set: {
+          preference: 'love-it'
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
 
-    // app.put('/apartmentsDown', (req, res) => {
-    //   db.collection('apartments')
-    //   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    //     $set: {
-    //       thumbUp:req.body.thumbUp - 1
-    //     }
-    //   }, {
-    //     sort: {_id: -1},
-    //     upsert: true
-    //   }, (err, result) => {
-    //     if (err) return res.send(err)
-    //     res.send(result)
-    //   })
-    // })
+    app.put('/groups/likeIt', (req, res) => {
+      db.collection('apartments')
+      .findOneAndUpdate({_id: ObjectId(req.body._id)}, {
+        $set: {
+          preference: 'like-it'
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
 
-    app.delete('/apartments', (req, res) => {
+    app.put('/groups/hateIt', (req, res) => {
+      db.collection('apartments')
+      .findOneAndUpdate({_id: ObjectId(req.body._id)}, {
+        $set: {
+          preference: 'hate-it'
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
+
+// DELETE routes ===============================================================
+    app.delete('/groups/delete', (req, res) => {
       db.collection('apartments').findOneAndDelete({_id: ObjectId(req.body._id)}, (err, result) => {
         if (err) return res.send(500, err)
-        res.send('Message deleted!')
+        res.send('apartment deleted!')
       })
     })
+
+
+
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================

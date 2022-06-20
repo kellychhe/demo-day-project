@@ -1,59 +1,75 @@
-// const thumbUp = document.getElementsByClassName("fa-thumbs-up");
-// const thumbDown = document.getElementsByClassName("fa-thumbs-down");
+const loveIt = document.getElementsByClassName("loveIt");
+const likeIt = document.getElementsByClassName("likeIt");
+const hateIt = document.getElementsByClassName("hateIt");
+
 const deleteBtn = document.getElementsByClassName("delete");
 
-// Array.from(thumbUp).forEach(function(element) {
-//       element.addEventListener('click', function(){
-//         const name = this.parentNode.parentNode.childNodes[1].innerText
-//         const msg = this.parentNode.parentNode.childNodes[3].innerText
-//         const thumbUp = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
-//         fetch('messages', {
-//           method: 'put',
-//           headers: {'Content-Type': 'application/json'},
-//           body: JSON.stringify({
-//             'name': name,
-//             'msg': msg,
-//             'thumbUp':thumbUp
-//           })
-//         })
-//         .then(response => {
-//           if (response.ok) return response.json()
-//         })
-//         .then(data => {
-//           console.log(data)
-//           window.location.reload(true)
-//         })
-//       });
-// });
+Array.from(loveIt).forEach(function(element) {
+      element.addEventListener('click', function(){
+        _id = this.parentNode.parentNode.id
+        console.log(_id)
+        fetch('loveIt', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            '_id': _id
+          })
+        })
+        .then(response => {
+          if (response.ok) return response.json()
+        })
+        .then(data => {
+          console.log(data)
+          window.location.reload(true)
+        })
+      });
+});
 
-// Array.from(thumbDown).forEach(function(element) {
-//   element.addEventListener('click', function(){
-//     const name = this.parentNode.parentNode.childNodes[1].innerText
-//     const msg = this.parentNode.parentNode.childNodes[3].innerText
-//     const thumbDown = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
-//     fetch('messagesDown', {
-//       method: 'put',
-//       headers: {'Content-Type': 'application/json'},
-//       body: JSON.stringify({
-//         'name': name,
-//         'msg': msg,
-//         'thumbUp':thumbDown
-//       })
-//     })
-//     .then(response => {
-//       if (response.ok) return response.json()
-//     })
-//     .then(data => {
-//       console.log(data)
-//       window.location.reload(true)
-//     })
-//   });
-// }); 
+Array.from(likeIt).forEach(function(element) {
+  element.addEventListener('click', function(){
+    _id = this.parentNode.parentNode.id
+    fetch('likeIt', {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        '_id': _id
+      })
+    })
+    .then(response => {
+      if (response.ok) return response.json()
+    })
+    .then(data => {
+      console.log(data)
+      window.location.reload(true)
+    })
+  });
+});
+
+Array.from(hateIt).forEach(function(element) {
+  element.addEventListener('click', function(){
+    _id = this.parentNode.parentNode.id
+    fetch('hateIt', {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        '_id': _id
+      })
+    })
+    .then(response => {
+      if (response.ok) return response.json()
+    })
+    .then(data => {
+      console.log(data)
+      window.location.reload(true)
+    })
+  });
+});
 
 Array.from(deleteBtn).forEach(function(element) {
       element.addEventListener('click', function(){
-        _id = this.parentNode.id
-        fetch('apartments', {
+        _id = this.parentNode.parentNode.id
+        console.log(_id)
+        fetch('delete', {
           method: 'delete',
           headers: {
             'Content-Type': 'application/json'

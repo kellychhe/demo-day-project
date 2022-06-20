@@ -1,166 +1,126 @@
-<!doctype html>
-<head>
-  <html>
-    <title>And They Were Roommates</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a href="#" class="navbar-brand">And They Were Roommates</a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"><span class="navbar-toggler-icon"></span></button>
-      
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Your List</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Things to Buy</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Notifications</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Me!</a></li>
-          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
-      </ul>
-      </div>
-    </div>
-  </nav>
-
-  <div class="col-sm-8">
-    <h1>Add an apartment!</h1>
-    <form action="/apartments" method="POST">
-      <div class="input-group mb-3">
-        <span class="input-group-text">Address</span>
-        <input type="text" class="form-control" placeholder="Street Address & Unit #" name="street">
-        <input type="text" class="form-control" placeholder="City" name="city">
-        <input type="text" class="form-control" placeholder="State" name="state">
-        <input type="text" class="form-control" placeholder="Zipcode" name="zipcode">
-      </div>
-
-      <div class="input-group mb-3">
-        <span class="input-group-text">Point of Contact:</span>
-        <input type="text" class="form-control" placeholder="Name" name="contactName">
-        <input type="text" class="form-control" placeholder="Number" name="contactNumber">
-        <input type="text" class="form-control" placeholder="E-mail" name="contactEmail">
-      </div>
-        
-      <h5>Apartment Information:</h5>
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Enter Bedrooms" name="bed">
-        <input type="text" class="form-control" placeholder="Enter Bathrooms" name="bath">
-        <input type="text" class="form-control" placeholder="Enter Price per Month" name="price">
-      </div>
-      
-      <h6>Utilites Included</h6>
-      <div class="utilites d-flex justify-content-space between" >
-        <div class="input-group mb-3 mx-2">
-          <div class="input-group-text">
-            <input class="form-check-input" type="checkbox" value="Water & Sewer" name="utilites">
-          </div>
-            <label class="form-control" for="waterSewer">Water & Sewer</label>
-        </div>
-        <div class="input-group mb-3 mx-2">
-          <div class="input-group-text">
-            <input type="checkbox" value="Trash & Recycling" name="utilites">
-          </div>
-            <label class="form-control" for="waterSewer">Trash & Recycling</label>
-        </div>
-        <div class="input-group mb-3 mx-2">
-          <div class="input-group-text">
-            <input type="checkbox" value="Gas" name="utilites">
-          </div>
-            <label class="form-control" for="gas">Gas</label>
-        </div>
-        <div class="input-group mb-3 mx-2">
-          <div class="input-group-text">
-            <input type="checkbox" value="Electricity" name="utilites">
-          </div>
-            <label class="form-control" for="electricity">Electricity</label>
-        </div>
-        <div class="input-group mb-3 mx-2">
-          <div class="input-group-text">
-            <input type="checkbox" value="Heat" name="utilites">
-          </div>
-            <label class="form-control" for="heat">Heat</label>
-        </div>
-        <div class="input-group mb-3 mx-2">
-          <div class="input-group-text">
-            <input type="checkbox" value="Internet" name="utilites">
-          </div>
-            <label class="form-control" for="internet">Internet</label>
-        </div>
-      </div>
-      <div class="d-flex justify-content-between mb-3">
-        <div class="input-group">
-          <span class="input-group-text">Amentities:</span>
-          <textarea name="amenities" placeholder="ie. laundry, dishwasher, etc." id="" cols="30" rows="3"></textarea>
-        </div>
-        <div class="input-group">
-          <span class="input-group-text">Additional Information</span>
-          <textarea name="additionalInfo" placeholder="grocery stores, restaurants, parks, links, etc." id="" cols="30" rows="3"></textarea>
-        </div>
-      </div>
-      <button type="submit" class="btn">Submit</button>
-        
-    </form>
-  </div>        
-  
-  <main>
-    <% for(var i=0; i<apartments.length; i++) {%>
-    <section class="card bg-light col-md-6" id="<%=apartments[i]._id%>">
-      <h3><%= apartments[i].street %></h3>
-      <h5><%= apartments[i].city %>, <%= apartments[i].state %> <%= apartments[i].zipcode %></h5>
-      <p><%= apartments[i].contactName %>: <%= apartments[i].contactEmail %> <%= apartments[i].contactNumber %></p>
-      <span><%= apartments[i].price %>/month</span>
-      <span><%= apartments[i].bed %> Bedroom(s), <%= apartments[i].bath %> Bathroom(s)</span>
-      <div class="accordion" id="apartmentDetails">
-        <div class="accordion-item">
-          <h4 class="accordion-header" id="headingOne">Apartment Information</h4>
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"> 
-            <p>Utilites Included: <%= apartments[i].utilites %></p>
-            <p>Amenities Included: <%= apartments[i].amenities %></p>
-            <p>Additional Information: <%= apartments[i].additionalInfo %></p>
-          </button>
-        </div>
-      </div>
-      <div>
-        <h3>Opinions?</h3>
-
-        <h4>Pros</h4>
-        <% for(var j=0; j<apartments[i].pros.length; j++) {%>
-          <span><%=apartments[i].pros[j].name%></span>
-          <p><%=apartments[i].pros[j].pro%></p>
-          <% } %>
-        <form action="/pros" method="POST">
-            <h6>Pros</h6>
-            <input type="hidden" name="hiddenId" value="<%=apartments[i]._id%>">
-            <input type="text" value="<%= user.local.email %>" name="name">
-            <textarea name="pros" placeholder="Enter Pros" id="" cols="30" rows="3"></textarea>
-            <button>Pros</button>
-        </form>
-        <h4>Cons</h4>
-        <% for(var j=0; j<apartments[i].cons.length; j++) {%>
-          <p><%=apartments[i].cons[j].name%></p>
-          <p><%=apartments[i].cons[j].con%></p>
-          <% } %>
-        <form action="/cons" method="POST">
-            <h6>Cons</h6>
-            <input type="hidden" name="hiddenId" value="<%=apartments[i]._id%>">
-            <input type="text" value="<%= user.local.email %>" name="name">
-            <textarea name="cons" placeholder="Enter Cons" id="" cols="30" rows="3"></textarea>
-            <button>Cons</button>
-        </form>
-      </div>
-        <button class="delete">Delete</button>
-    </section>
-    <% } %>
-  </main>
-
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-<script src="main.js"></script>
-
-</body>
-
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Modern Business - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="styles.css" rel="stylesheet" />
+        <link href="edits.css" rel="stylesheet" />
+    </head>
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-green">
+                <div class="container px-5">
+                    <a class="navbar-brand" href="/">And They Were Roommates</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
+                            <!-- <li class="nav-item"><a class="nav-link" href="#">Contact</a></li> -->
+                            <!-- <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li> -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Groups</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                    <% for(let i=0; i<groups.length; i++) {%>
+                                    <li><a class="dropdown-item" href="/groups/<%= groups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                    <%}%>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Add Apartment</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
+                                    <% for(let i=0; i<groups.length; i++) {%>
+                                        <li><a class="dropdown-item" href="/form/<%= groups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                        <%}%>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                            <!-- <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
+                                    <li><a class="dropdown-item" href="#">Portfolio Overview</a></li>
+                                    <li><a class="dropdown-item" href="#">Portfolio Item</a></li>
+                                </ul>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <section class="py-5">
+                <div class="container px-5">
+                    <h1 class="mb-5"><%=user.local.firstName%>'s Apartment Groups</h1>
+                    <div class="row gx-5">
+                        <% for(let i=0; i<groups.length; i++) {%>
+                        <div class="col-lg-4 mb-5">
+                            <div class="card bg-color-two h-100 shadow border-0">
+                                <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
+                                <div class="card-body p-4" id="<%= groups[i]._id%>">
+                                    <!-- <div class="badge bg-primary bg-gradient rounded-pill mb-2" >News</div> -->
+                                    <div class="h5 card-title mb-3"><%= groups[i].groupName%></div>
+                                    <p class="card-text mb-0">House Buddies: </p>
+                                    <a href="/form/<%= groups[i]._id%>"><button class="btn bg-button my-3">Add an Apartment</button></a>
+                                    <a href="/groups/<%= groups[i]._id%>"><button class="btn bg-button">See All Apartments</button></a>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+            </section>
+            <div class="container">
+                <div class="row">
+                    <div class="d-md-flex justify-content-around mb-5">
+                        <div class="p-3 card bg-color-one">
+                            <form action="/addGroup" method="post">
+                                <h5>Add a Group to your profile!</h5>
+                                <input type="text" name="groupName">
+                                <input type="hidden" name="addedUserId" value="<%=user._id%>">
+                                <button type="submit" class="btn bg-button">Add</button>
+                            </form>
+                        </div>
+                        <div class="p-3 card bg-color-one">
+                            <form action="/createGroup" method="post">
+                                <h5>Create a Group</h5>
+                                <label for="">Name your group: </label>
+                                <div>
+                                    <input type="text" name="groupName">
+                                    <input type="hidden" name="currentUserId" value="<%=user._id%>">
+                                    <button type="submit" class="btn bg-button">Create</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </main>
+        <!-- Footer-->
+        <footer class="bg-green py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Kelly Chhe 2022</div></div>
+                    <div class="col-auto">
+                        <a class="link-light small" href="#!">Privacy</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Terms</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="main.js"></script>
+    </body>
 </html>
