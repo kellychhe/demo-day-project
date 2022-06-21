@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Modern Business - Start Bootstrap Template</title>
+        <title>Roomies</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -24,22 +24,31 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
                             <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link" href="#">Contact</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li> -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Groups</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <% for(let i=0; i<groups.length; i++) {%>
-                                        <li><a class="dropdown-item" href="/groups/<%= allGroups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                    <% if (allGroups.length === 0){%>
+                                        <li>You have no Groups</li>
+                                        <%} else {%>
+                                    <% for(let i=0; i<allGroups.length; i++) {%>
+                                        <li><a class="dropdown-item" href="/groups/<%= allGroups[i]._id%>"><%= allGroups[i].groupName %></a></li>
+                                        <%}%>
                                         <%}%>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Add Apartment</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                                    <% for(let i=0; i<groups.length; i++) {%>
-                                        <li><a class="dropdown-item" href="/form/<%= allGroups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                    <% if (allGroups.length === 0){%>
+                                        <li>You have no Groups</li>
+                                        <%} else {%>
+                                    <% for(let i=0; i<allGroups.length; i++) {%>
+                                        <li><a class="dropdown-item" href="/form/<%= allGroups[i]._id%>"><%= allGroups[i].groupName %></a></li>
+                                        <%}%>
                                         <%}%>
                                 </ul>
                             </li>
@@ -56,23 +65,23 @@
                 </div>
             </nav>
 
-            <section class="bg-light py-5">
+            <section class="bg-color-two py-5">
                 <div class="container px-5 my-5">
-                    <div class="card">
+                    <div class="card bg-light">
                         <div class="card-body p-5">
                             
                             <div class="mb-3">
-                                <h1>Add an apartment!</h1>
+                                <h1>Add an apartment to <a href="/groups/<%=currentGroup[0]._id%>"><%=currentGroup[0].groupName%></a>!</h1>
                             </div>
                             <form action="/apartments" method="post">
-                                <input type="hidden" name="groupId" value="<%=groups[0]._id%>">
+                                <input type="hidden" name="groupId" value="<%=currentGroup[0]._id%>">
                                 <ul class="list-unstyled mb-4">
                                     <li class="input-group mb-2">
                                         <span class="input-group-text">Address</span>
-                                        <input type="text" class="form-control" placeholder="Street Address & Unit #" name="street">
-                                        <input type="text" class="form-control" placeholder="City" name="city">
-                                        <input type="text" class="form-control" placeholder="State" name="state">
-                                        <input type="text" class="form-control" placeholder="Zipcode" name="zipcode">
+                                        <input required type="text" class="form-control" placeholder="Street Address & Unit #" name="street">
+                                        <input required type="text" class="form-control" placeholder="City" name="city">
+                                        <input required type="text" class="form-control" placeholder="State" name="state">
+                                        <input required type="text" class="form-control" placeholder="Zipcode" name="zipcode">
                                     </li>
                                     <li class="input-group mb-2">
                                         <span class="input-group-text">Point of Contact:</span>
@@ -81,9 +90,9 @@
                                         <input type="text" class="form-control" placeholder="E-mail" name="contactEmail">
                                     </li>
                                     <li class="input-group mb-2">
-                                        <input type="text" class="form-control" placeholder="Enter Bedrooms" name="bed">
-                                        <input type="text" class="form-control" placeholder="Enter Bathrooms" name="bath">
-                                        <input type="text" class="form-control" placeholder="Enter Price per Month" name="price">
+                                        <input required type="text" class="form-control" placeholder="Enter Bedrooms" name="bed">
+                                        <input required type="text" class="form-control" placeholder="Enter Bathrooms" name="bath">
+                                        <input required type="text" class="form-control" placeholder="Enter Price per Month" name="price">
                                     </li>
                                     <li class="mb-2">
                                         <h6>Utilites Included</h6>
@@ -137,7 +146,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn bg-button">Submit</button>
                             </form>
                         </div>
                     </div>

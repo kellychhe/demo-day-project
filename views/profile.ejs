@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Modern Business - Start Bootstrap Template</title>
+        <title>Roomies</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -24,22 +24,31 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
                             <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link" href="#">Contact</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li> -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Groups</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <% for(let i=0; i<groups.length; i++) {%>
-                                    <li><a class="dropdown-item" href="/groups/<%= groups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                    <% if (groups.length === 0){%>
+                                        <li>You have no Groups</li>
+                                        <%} else {%>
+                                        <% for(let i=0; i<groups.length; i++) {%>
+                                        <li><a class="dropdown-item" href="/groups/<%= groups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                    <%}%>
                                     <%}%>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Add Apartment</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
+                                    <% if (groups.length === 0){%>
+                                        <li>You have no Groups</li>
+                                        <%} else {%>
                                     <% for(let i=0; i<groups.length; i++) {%>
                                         <li><a class="dropdown-item" href="/form/<%= groups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                        <%}%>
                                         <%}%>
                                 </ul>
                             </li>
@@ -62,11 +71,12 @@
                         <% for(let i=0; i<groups.length; i++) {%>
                         <div class="col-lg-4 mb-5">
                             <div class="card bg-color-two h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
+                                <img class="card-img-top" src="/img/groupPlaceholder.jpeg" alt="..." />
                                 <div class="card-body p-4" id="<%= groups[i]._id%>">
                                     <!-- <div class="badge bg-primary bg-gradient rounded-pill mb-2" >News</div> -->
-                                    <div class="h5 card-title mb-3"><%= groups[i].groupName%></div>
-                                    <p class="card-text mb-0">House Buddies: </p>
+                                    <div class="h4 card-title mb-3 d-flex justify-content-between"><span><%= groups[i].groupName%></span> <span><i class="bi bi-trash"></i></span></div>
+                                    <p class="groupMembersButton">Group Members <i class="bi bi-caret-down-fill"></i></p>
+                                    <ul class="groupMembers"></ul>
                                     <a href="/form/<%= groups[i]._id%>"><button class="btn bg-button my-3">Add an Apartment</button></a>
                                     <a href="/groups/<%= groups[i]._id%>"><button class="btn bg-button">See All Apartments</button></a>
                                 </div>
@@ -79,24 +89,32 @@
             <div class="container">
                 <div class="row">
                     <div class="d-md-flex justify-content-around mb-5">
-                        <div class="p-3 card bg-color-one">
-                            <form action="/addGroup" method="post">
-                                <h5>Add a Group to your profile!</h5>
-                                <input type="text" name="groupName">
-                                <input type="hidden" name="addedUserId" value="<%=user._id%>">
-                                <button type="submit" class="btn bg-button">Add</button>
-                            </form>
+                        <div class="my-3">
+                            <div class="p-4 card bg-color-one">
+                                
+                                <form action="/addGroup" method="post">
+                                    <h5>Add a Group to your profile!</h5>
+                                    <label for="">Enter a group: </label>
+                                    <div>
+                                        <input type="text" name="groupName" placeholder="Existing Group Name">
+                                        <input type="hidden" name="addedUserId" value="<%=user._id%>">
+                                        <button type="submit" class="btn-sm btn-dark">Add</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="p-3 card bg-color-one">
-                            <form action="/createGroup" method="post">
-                                <h5>Create a Group</h5>
-                                <label for="">Name your group: </label>
-                                <div>
-                                    <input type="text" name="groupName">
-                                    <input type="hidden" name="currentUserId" value="<%=user._id%>">
-                                    <button type="submit" class="btn bg-button">Create</button>
-                                </div>
-                            </form>
+                        <div class="my-3">
+                            <div class="p-4 card bg-color-one">
+                                <form action="/createGroup" method="post">
+                                    <h5>Create a Group</h5>
+                                    <label for="">Name your group: </label>
+                                    <div>
+                                        <input type="text" name="groupName" placeholder="New Group Name">
+                                        <input type="hidden" name="currentUserId" value="<%=user._id%>">
+                                        <button type="submit" class="btn-sm btn-dark">Create</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

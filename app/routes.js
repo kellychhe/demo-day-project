@@ -12,25 +12,7 @@ module.exports = function(app, passport, db, ObjectId) { // sends function to se
         const userGroups = results.filter(group => group.usersId.includes(req.user._id.toString()))
         // console.log('filtered', userGroups)
         // console.log('id', req.user._id)
-        const groupObj = {}
-        for (groups of userGroups){
-          groupObj[groups._id] = []
-        }
-        //groupObj ={
-          // group id: []
-        //}
-        // const groupMembers = results.filter().usersId
-        //.filter(members => members !== req.user_id.toString())
-        // console.log(userGroups)
-      db.collection('users').find().toArray((err, results) => {
-        for (let i = 0; i < userGroups; i++){
-          for (let j = 0; j < userGroups[i].usersId; j++){
-            if(true){
-
-              groupObj[userGroups[i]._id].push()
-            }
-          }
-        }
+        
         // const members = results.filter(member => groupMembers.includes(member._id.toString))
         // console.log(members)
         console.log(results)
@@ -42,22 +24,21 @@ module.exports = function(app, passport, db, ObjectId) { // sends function to se
           // groupMembers: members
         })
       })
-      })
+
     })
 
     app.get('/form/:id', isLoggedIn, function(req,res) {
+      const groupId = ObjectId(req.params.id)
       db.collection('groups').find().toArray((err, results) => {
-        const oneGroup = results.filter(group => group.usersId.includes(req.user._id.toString()))
-        // console.log('filtered',oneGroup)
-        // console.log('result id',results[0].usersId)
-        // console.log('users id', req.user._id)
-        // console.log('group id', groupId)
+        const groups = results.filter(group => group.usersId.includes(req.user._id.toString()))
+      db.collection('groups').find({ _id: groupId}).toArray((err, results) => {
         if (err) return console.log(err)
         // console.log('results:', results)
         res.render('form.ejs', {
-          allGroups: results,
-          groups: oneGroup
+          allGroups: groups,
+          currentGroup: results
         })
+      })
       })
     })
 
@@ -107,6 +88,17 @@ module.exports = function(app, passport, db, ObjectId) { // sends function to se
       })
     });
 
+    app.get('/getGroupMembers/:id', async (req, res) => {
+		const groupId = req.params.id
+		const groupCursor = db.collection('groups').find({ _id: ObjectId(groupId) })
+		const group = await groupCursor.toArray()
+		const usersIds = await group[0].usersId.map((id) => ObjectId(id))
+		const usersCursor = await db.collection('users').find({ _id: { $in: usersIds } })
+		const users = await usersCursor.toArray()
+		res.json({ groupMembers: users.map((user) => `${user.local.firstName} ${user.local.lastName}`) })
+	})
+
+
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
@@ -127,13 +119,15 @@ module.exports = function(app, passport, db, ObjectId) { // sends function to se
     })
 
     app.post('/addGroup', (req,res) => {
+      // const allGroups = 
       db.collection('groups').updateOne({groupName: req.body.groupName},{
         $push: {
           usersId: req.body.addedUserId
         },
       },(err, result) => {
+        // console.log(result)
         if (err) return console.log(err)
-        // console.log('group added')
+        console.log('group added')
         res.redirect('/profile')
       })
     })
@@ -250,6 +244,23 @@ module.exports = function(app, passport, db, ObjectId) { // sends function to se
         })
     })
     // PUT routes ===============================================================
+    
+    app.put('/deleteGroup', (req, res) => {
+      db.collection('groups')
+      .findOneAndUpdate({_id: ObjectId(req.body._id)}, {
+        $pull: {
+          usersId: {
+            $in: [req.user._id.toString()]
+          }
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: false
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
 
     app.put('/groups/loveIt', (req, res) => {
       db.collection('apartments')

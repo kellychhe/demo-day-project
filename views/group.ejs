@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Modern Business - Start Bootstrap Template</title>
+        <title>Roomies</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -24,15 +24,19 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                            <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
+                            <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
                             <!-- <li class="nav-item"><a class="nav-link" href="#">Contact</a></li> -->
                             <!-- <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li> -->
                             
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Groups</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                    <% if (groups.length === 0){%>
+                                        <li>You have no Groups</li>
+                                        <%} else {%>
                                     <% for(let i=0; i<groups.length; i++) {%>
                                         <li><a class="dropdown-item" href="/groups/<%= groups[i]._id%>"><%= groups[i].groupName %></a></li>
+                                        <%}%>
                                         <%}%>
                                 </ul>
                             </li>
@@ -54,6 +58,8 @@
                 <div class="container px-5 my-5">
                     <div class="text-center mb-5">
                         <h1 class="fw-bolder"><%=user.local.firstName%>'s Potential Apartments</h1>
+                        <button class="groupMembersButton">Group Members -> </button>
+                            <ul class="groupMembers"></ul>
                         <!-- <p class="lead fw-normal text-muted mb-0">With our no hassle pricing plans</p> -->
                     </div>
                     <div class="row gx-5 justify-content-center">
