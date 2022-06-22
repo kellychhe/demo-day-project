@@ -46,12 +46,12 @@ module.exports = function(app, passport, db, ObjectId) { // sends function to se
     app.get('/groups/:id', isLoggedIn, function(req, res) {
       const groupId = req.params.id.toString()
       // console.log( 'this is the id', groupId)
-        db.collection('apartments').find( { groupId: groupId } ).toArray((err, results) => { 
-          // console.log('results',results)
-          const loveIt = results.filter(apt => apt.preference === 'love-it') 
-          const likeIt = results.filter(apt => apt.preference === 'like-it') 
-          const hateIt = results.filter(apt => apt.preference === 'hate-it') 
-          const notRated = results.filter(apt => apt.preference === '')
+      db.collection('apartments').find( { groupId: groupId } ).toArray((err, results) => { 
+        // console.log('results',results)
+        const loveIt = results.filter(apt => apt.preference === 'love-it') 
+        const likeIt = results.filter(apt => apt.preference === 'like-it') 
+        const hateIt = results.filter(apt => apt.preference === 'hate-it') 
+        const notRated = results.filter(apt => apt.preference === '')
         
         db.collection('groups').find().toArray((err, results) => {
           const userGroups = results.filter(group => group.usersId.includes(req.user._id.toString()))

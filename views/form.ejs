@@ -19,7 +19,7 @@
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-green">
                 <div class="container px-5">
-                    <a class="navbar-brand" href="/">And They Were Roommates</a>
+                    <a class="navbar-brand" href="/">Roomies</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -68,86 +68,97 @@
             <section class="bg-color-two py-5">
                 <div class="container px-5 my-5">
                     <div class="card bg-light">
-                        <div class="card-body p-5">
+                        <div class="card-body p-sm-5">
                             
                             <div class="mb-3">
-                                <h1>Add an apartment to <a href="/groups/<%=currentGroup[0]._id%>"><%=currentGroup[0].groupName%></a>!</h1>
+                                <h1>Add an apartment to <a class="form-a" href="/groups/<%=currentGroup[0]._id%>"><%=currentGroup[0].groupName%></a>!</h1>
                             </div>
                             <form action="/apartments" method="post">
                                 <input type="hidden" name="groupId" value="<%=currentGroup[0]._id%>">
-                                <ul class="list-unstyled mb-4">
-                                    <li class="input-group mb-2">
-                                        <span class="input-group-text">Address</span>
-                                        <input required type="text" class="form-control" placeholder="Street Address & Unit #" name="street">
-                                        <input required type="text" class="form-control" placeholder="City" name="city">
-                                        <input required type="text" class="form-control" placeholder="State" name="state">
-                                        <input required type="text" class="form-control" placeholder="Zipcode" name="zipcode">
-                                    </li>
-                                    <li class="input-group mb-2">
-                                        <span class="input-group-text">Point of Contact:</span>
-                                        <input type="text" class="form-control" placeholder="Name" name="contactName">
-                                        <input type="text" class="form-control" placeholder="Number" name="contactNumber">
-                                        <input type="text" class="form-control" placeholder="E-mail" name="contactEmail">
-                                    </li>
-                                    <li class="input-group mb-2">
-                                        <input required type="text" class="form-control" placeholder="Enter Bedrooms" name="bed">
-                                        <input required type="text" class="form-control" placeholder="Enter Bathrooms" name="bath">
-                                        <input required type="text" class="form-control" placeholder="Enter Price per Month" name="price">
-                                    </li>
-                                    <li class="mb-2">
-                                        <h6>Utilites Included</h6>
-                                        <div class="utilites d-flex justify-content-space between" >
-                                            <div class="input-group mb-3 mx-2">
-                                                <div class="input-group-text">
-                                                    <input class="form-check-input" type="checkbox" value="Water & Sewer" name="utilites">
-                                                </div>
-                                                <label class="form-control" for="waterSewer">Water & Sewer</label>
-                                            </div>
-                                            <div class="input-group mb-3 mx-2">
-                                                <div class="input-group-text">
-                                                    <input type="checkbox" value="Trash & Recycling" name="utilites">
-                                                </div>
-                                                <label class="form-control" for="waterSewer">Trash & Recycling</label>
-                                            </div>
-                                            <div class="input-group mb-3 mx-2">
-                                                <div class="input-group-text">
-                                                    <input type="checkbox" value="Gas" name="utilites">
-                                                </div>
-                                                <label class="form-control" for="gas">Gas</label>
-                                            </div>
-                                            <div class="input-group mb-3 mx-2">
-                                                <div class="input-group-text">
-                                                    <input type="checkbox" value="Electricity" name="utilites">
-                                                </div>
-                                                <label class="form-control" for="electricity">Electricity</label>
-                                            </div>
-                                            <div class="input-group mb-3 mx-2">
-                                                <div class="input-group-text">
-                                                    <input type="checkbox" value="Heat" name="utilites">
-                                                </div>
-                                                <label class="form-control" for="heat">Heat</label>
-                                            </div>
-                                            <div class="input-group mb-3 mx-2">
-                                                <div class="input-group-text">
-                                                    <input type="checkbox" value="Internet" name="utilites">
-                                                </div>
-                                                <label class="form-control" for="internet">Internet</label>
-                                            </div>
+                                <ul class="list-unstyled mb-4 container">
+                                        <div class="row">
+                                        <li class="col-md mt-5">
+                                            <span class="input-group-text bg-button">Address</span>
+                                            <input required type="text" class="form-control" placeholder="Street Address & Unit #" name="street">
+                                            <input required type="text" class="form-control" placeholder="City" name="city">
+                                            <input required type="text" class="form-control" placeholder="State" name="state">
+                                            <input required type="text" class="form-control" placeholder="Zipcode" name="zipcode">
+                                        </li>
+                                        <li class="col-md my-5">
+                                            <span class="input-group-text bg-button">Point of Contact:</span>
+                                            <input type="text" class="form-control" placeholder="Name" name="contactName">
+                                            <input type="text" class="form-control" placeholder="Number" name="contactNumber">
+                                            <input type="text" class="form-control" placeholder="E-mail" name="contactEmail">
+                                        </li>
                                         </div>
-                                    </li>
-                                    <li class="d-flex justify-content-between mb-2">
-                                        <div class="input-group">
-                                            <span class="input-group-text">Amentities:</span>
-                                            <textarea name="amenities" placeholder="ie. laundry, dishwasher, etc." id="" cols="30" rows="3"></textarea>
+                                        <div class="row">
+                                        <li class="col-md mb-2">
+                                            <span class="input-group-text bg-button">General Info:</span>
+                                            <input required type="text" class="form-control" placeholder="Enter Bedrooms" name="bed">
+                                            <input required type="text" class="form-control" placeholder="Enter Bathrooms" name="bath">
+                                            <input required type="text" class="form-control" placeholder="Enter Price per Month" name="price">
+                                        </li>
+                                        <li class="col-md d-flex flex-column">
+                                            <div class="input-group ">
+                                                <span class="input-group-text bg-button">Amentities:</span>
+                                                <textarea name="amenities" placeholder="ie. laundry, dishwasher, etc." id="" cols="30" rows="3"></textarea>
+                                            </div>
+                                            <div class="input-group my-3">
+                                                <span class="input-group-text bg-button">Additional Information</span>
+                                                <textarea name="additionalInfo" placeholder="grocery stores, restaurants, parks, links, etc." id="" cols="30" rows="3"></textarea>
+                                            </div>
+                                        </li>
                                         </div>
-                                        <div class="input-group">
-                                            <span class="input-group-text">Additional Information</span>
-                                            <textarea name="additionalInfo" placeholder="grocery stores, restaurants, parks, links, etc." id="" cols="30" rows="3"></textarea>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <button type="submit" class="btn bg-button">Submit</button>
-                            </form>
+                                        <div>
+                                            <li class="col-md mb-2 container">
+                                                <h6>Utilites Included</h6>
+                                                <div class="row">
+                                                    <div class="col-md input-group mb-3">
+                                                        <div class="input-group-text bg-button">
+                                                            <input class="form-check-input" type="checkbox" value="Water & Sewer" name="utilites">
+                                                        </div>
+                                                        <label class="form-control" for="waterSewer">Water & Sewer</label>
+                                                    </div>
+                                                    <div class="col-md input-group mb-3">
+                                                        <div class="input-group-text bg-button">
+                                                            <input type="checkbox" value="Trash & Recycling" name="utilites">
+                                                        </div>
+                                                        <label class="form-control" for="waterSewer">Trash & Recycling</label>
+                                                    </div>
+                                                    <div class="col-md input-group mb-3">
+                                                        <div class="input-group-text bg-button">
+                                                            <input type="checkbox" value="Gas" name="utilites">
+                                                        </div>
+                                                        <label class="form-control" for="gas">Gas</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md input-group mb-3">
+                                                        <div class="input-group-text bg-button">
+                                                            <input type="checkbox" value="Electricity" name="utilites">
+                                                        </div>
+                                                        <label class="form-control" for="electricity">Electricity</label>
+                                                    </div>
+                                                    <div class="col-md input-group mb-3">
+                                                        <div class="input-group-text bg-button">
+                                                            <input type="checkbox" value="Heat" name="utilites">
+                                                        </div>
+                                                        <label class="form-control" for="heat">Heat</label>
+                                                    </div>
+                                                    <div class="col-md input-group mb-3">
+                                                        <div class="input-group-text bg-button">
+                                                            <input type="checkbox" value="Internet" name="utilites">
+                                                        </div>
+                                                        <label class="form-control" for="internet">Internet</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            
+                                            </div>
+                                    </ul>
+                                    <button type="submit" class="btn bg-button">Submit</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

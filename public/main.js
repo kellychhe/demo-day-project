@@ -81,31 +81,33 @@ Array.from(deleteBtn).forEach(function(element) {
       });
 });
 
-const groupMembersButton = document.querySelector('.groupMembersButton')
-const groupMembers = document.querySelector('.groupMembers')
-const getGroupMembers = (e) => {
-	groupMembers.innerHTML = 'loading'
-  let groupId = window.location.href.split('/').pop()
-  if (window.location.href.split('/').pop() === 'profile'){
-    groupId = e.target.parentNode.id || e.target.parentNode.parentNode.id
-  }
-	fetch(`/getGroupMembers/${groupId}`, {
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-		},
-	})
-		.then((res) => res.json())
-		.then((data) => {
-			groupMembers.innerHTML = ''
-			data.groupMembers.forEach((member) => {
-				const li = document.createElement('li')
-				li.textContent = member
-				groupMembers.appendChild(li)
-			})
-		})
-} 
-groupMembersButton?.addEventListener('click', getGroupMembers)
+const groupMembersButton = document.querySelectorAll('.groupMembersButton')
+Array.from(groupMembersButton).forEach(function(element){
+  element.addEventListener('click', function(e){
+    const groupMembers = e.target.parentNode.querySelector('.groupMembers')
+	  groupMembers.innerHTML = 'loading'
+    let groupId = window.location.href.split('/').pop()
+    if (window.location.href.split('/').pop() === 'profile'){
+      groupId = e.target.parentNode.id || e.target.parentNode.parentNode.id
+    }
+	  fetch(`/getGroupMembers/${groupId}`, {
+	  	headers: {
+	  		'Content-Type': 'application/json',
+	  		Accept: 'application/json',
+	  	},
+	  })
+    .then((res) => res.json())
+    .then((data) => {
+      groupMembers.innerHTML = ''
+      data.groupMembers.forEach((member) => {
+        const li = document.createElement('li')
+        li.textContent = member
+        groupMembers.appendChild(li)
+        li.classList.add('align-self-center')
+      })
+    })
+  })
+})
 
 const deleteGroup = document.querySelectorAll('.bi-trash')
 Array.from(deleteGroup).forEach(function(element) {

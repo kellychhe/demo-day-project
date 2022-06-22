@@ -1,14 +1,18 @@
+a{
+    color: black;
+}
 .bg-green{
     background-color: #2c4e18;
 }
 .bg-love-it{
-    background-color: #d0ff88;
+    background-color: #9aad8d;
 }
 .bg-like-it{
-    background-color: #ffd760;
+    background-color: #dbd44d;
 }
 .bg-hate-it{
-    background-color: #ffb1b1;
+    background-color: #883737;
+    color: white;
 }
 .bg-color-one{
     background-color: #9aad8d;
@@ -26,4 +30,13 @@
 }
 .bg-brown{
     background-color: #7a6645;
+}
+.red-a{
+    color: white;
+}
+.comment{
+    width: 90%;
+}
+.form-a{
+    color: #2c4e18;
 }

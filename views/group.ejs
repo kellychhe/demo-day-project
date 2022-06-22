@@ -19,7 +19,7 @@
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-green">
                 <div class="container px-5">
-                    <a class="navbar-brand" href="/">And They Were Roommates</a>
+                    <a class="navbar-brand" href="/">Roomies</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -54,12 +54,12 @@
                 </div>
             </nav>
 
-            <section class="bg-light py-5">
+            <section class="bg-color-two py-5">
                 <div class="container px-5 my-5">
                     <div class="text-center mb-5">
                         <h1 class="fw-bolder"><%=user.local.firstName%>'s Potential Apartments</h1>
-                        <button class="groupMembersButton">Group Members -> </button>
-                            <ul class="groupMembers"></ul>
+                        <p class="groupMembersButton">Group Members <i class="bi bi-caret-down-fill"></i></p>
+                                    <ul class="groupMembers d-flex flex-column"></ul>
                         <!-- <p class="lead fw-normal text-muted mb-0">With our no hassle pricing plans</p> -->
                     </div>
                     <div class="row gx-5 justify-content-center">
@@ -104,9 +104,9 @@
                                         </li>
                                     </ul>
                                     <div>
-                                        <button class="loveIt btn btn-success">Love it!</button>
-                                        <button class="likeIt mx-3 btn btn-warning">Like it</button>
-                                        <button class="hateIt btn btn-danger">Hate it</button>
+                                        <button class="loveIt btn btn-success mt-2">Love it!</button>
+                                        <button class="likeIt mx-3 btn btn-warning mt-2">Like it</button>
+                                        <button class="hateIt btn btn-danger mt-2">Hate it</button>
                                     </div>
                                     <div class="d-grid mt-4"><button class="delete btn btn-secondary">Delete</button></div>
                                 </div>
@@ -153,9 +153,9 @@
                                         </li>
                                     </ul>
                                     <div>
-                                        <button class="loveIt btn btn-success">Love it!</button>
-                                        <button class="likeIt mx-3 btn btn-warning">Like it</button>
-                                        <button class="hateIt btn btn-danger">Hate it</button>
+                                        <button class="loveIt btn btn-success mt-2">Love it!</button>
+                                        <button class="likeIt mx-3 btn btn-warning mt-2">Like it</button>
+                                        <button class="hateIt btn btn-danger mt-2">Hate it</button>
                                     </div>
                                     <div class="d-grid mt-4"><button class="delete btn btn-secondary">Delete</button></div>
                                 </div>
@@ -172,8 +172,8 @@
                                         Pro
                                     </div> -->
                                     <div class="mb-3">
-                                        <a href="/post/<%= hate[i]._id%>" target="_blank"><h2><%= hate[i].street %></h2></a>
-                                        <p class="text-muted"><%= hate[i].city %>, <%= hate[i].state %> <%= hate[i].zipcode %></p>
+                                        <a class="red-a" href="/post/<%= hate[i]._id%>" target="_blank"><h2><%= hate[i].street %></h2></a>
+                                        <p class="text-light"><%= hate[i].city %>, <%= hate[i].state %> <%= hate[i].zipcode %></p>
                                     </div>
                                     <ul class="list-unstyled mb-4">
                                         <li class="mb-2">
@@ -202,9 +202,9 @@
                                         </li>
                                     </ul>
                                     <div>
-                                        <button class="loveIt btn btn-success">Love it!</button>
-                                        <button class="likeIt mx-3 btn btn-warning">Like it</button>
-                                        <button class="hateIt btn btn-danger">Hate it</button>
+                                        <button class="loveIt btn btn-success mt-2">Love it!</button>
+                                        <button class="likeIt mx-3 btn btn-warning mt-2">Like it</button>
+                                        <button class="hateIt btn btn-danger mt-2">Hate it</button>
                                     </div>
                                     <div class="d-grid mt-4"><button class="delete btn btn-secondary">Delete</button></div>
                                 </div>
@@ -247,9 +247,9 @@
                                         </li>
                                     </ul>
                                     <div>
-                                        <button class="loveIt btn btn-success">Love it!</button>
-                                        <button class="likeIt mx-3 btn btn-warning">Like it</button>
-                                        <button class="hateIt btn btn-danger">Hate it</button>
+                                        <button class="loveIt btn btn-success mt-2">Love it!</button>
+                                        <button class="likeIt mx-3 btn btn-warning mt-2">Like it</button>
+                                        <button class="hateIt btn btn-danger mt-2">Hate it</button>
                                     </div>
                                     <div class="d-grid mt-4"><button class="delete btn btn-secondary">Delete</button></div>
                                 </div>
