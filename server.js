@@ -17,6 +17,7 @@ const cookieParser = require('cookie-parser'); //helps look at cookies
 const bodyParser   = require('body-parser');
 const session      = require('express-session'); //once user logs in, you want to make sure they are still logged in. whn they log out it is terminated. jump around from page to page w/o logging out
 
+require('dotenv').config()
 const configDB = require('./config/database.js'); //object that has url property and db property in this file
 
 let db
